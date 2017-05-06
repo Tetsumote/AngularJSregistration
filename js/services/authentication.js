@@ -26,6 +26,15 @@ function($rootScope,$location,$firebaseObject,$firebaseAuth){
 			$rootScope.message = error.message;
 		});//signInWithEmailAndPassword
 		},//login
+		
+		logout: function(){
+			return auth.$signOut();
+		},//logout
+		
+		requireAuth: function(){
+			return auth.$requireSignIn();
+		},//require Authentication
+		
 		register: function(user){
 			auth.$createUserWithEmailAndPassword(
 			user.email,

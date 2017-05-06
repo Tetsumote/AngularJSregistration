@@ -4,6 +4,7 @@ function($rootScope,$location,$firebaseObject,$firebaseAuth){
 	
 	var ref = firebase.database().ref();
 	var auth = $firebaseAuth();
+	var myObject;
 	
 	auth.$onAuthStateChanged(function(authUser){
 		if(authUser){
@@ -15,7 +16,7 @@ function($rootScope,$location,$firebaseObject,$firebaseAuth){
 		}
 	});
 	
-	return{
+	myObject = {
 		login: function(user){
 		auth.$signInWithEmailAndPassword(
 			user.email,
@@ -48,11 +49,13 @@ function($rootScope,$location,$firebaseObject,$firebaseAuth){
 				lastname: user.lastname,
 				email: user.email
 			});//userinfo
-			$rootScope.message = "Hi " + user.firstname +
-			", Thanks for registering";	
+				myObject.login(user);
 			}).catch(function(error){
 				$rootScope.message = error.message;
 			});//createUserWithEmailAndPassword
 		}//register
 	};//return
+	
+	
+	return myObject;
 }]);//factory
